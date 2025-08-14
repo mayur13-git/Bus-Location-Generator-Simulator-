@@ -1,0 +1,37 @@
+import json
+import random
+import time
+
+# Function to generate random coordinates (latitude and longitude)
+def generate_random_coordinates():
+    # Example range: somewhere around Delhi NCR
+    lat = round(random.uniform(28.40, 28.70), 6)
+    lon = round(random.uniform(76.90, 77.30), 6)
+    return {"lat": lat, "lon": lon}
+
+# Main function
+def simulate_bus_locations():
+    bus_data = {}
+
+    # Simulate 5 buses
+    bus_ids = [f"Bus_{i}" for i in range(201, 206)]
+
+    try:
+        while True:
+            for bus_id in bus_ids:
+                bus_data[bus_id] = generate_random_coordinates()
+
+            # Save positions to JSON file
+            with open("bus_locations.json", "w") as f:
+                json.dump(bus_data, f, indent=4)
+
+            print(f"Updated Bus Locations:\n{json.dumps(bus_data, indent=4)}\n")
+            
+            # Update every 5 seconds
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("Simulation stopped.")
+
+if __name__ == "__main__":
+    simulate_bus_locations()
